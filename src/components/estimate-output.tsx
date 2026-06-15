@@ -8,6 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertIcon } from "@/components/ui/alert";
 
+// Number of columns in the line-items table; used for the subtotal colSpan.
+const LINE_ITEM_COLUMNS = 5;
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -234,7 +237,7 @@ export function EstimateOutput({ estimate }: EstimateOutputProps) {
               <tfoot>
                 <tr className="border-t-2 border-gray-300">
                   <td
-                    colSpan={4}
+                    colSpan={LINE_ITEM_COLUMNS - 1}
                     className="pt-3 pr-3 text-right font-bold text-gray-900"
                   >
                     Estimated Subtotal

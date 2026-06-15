@@ -697,6 +697,14 @@ function calculateConfidence(
 // Main export
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function formatQuantity(quantity: number): string {
+  return quantity % 1 === 0 ? String(quantity) : quantity.toFixed(1);
+}
+
 export function generateEstimate(form: EstimateFormValues): GeneratedEstimate {
   const tradeItems = getTradeLineItems(form);
   const safetyFlags = detectSafetyFlags(form);
@@ -705,7 +713,7 @@ export function generateEstimate(form: EstimateFormValues): GeneratedEstimate {
   // Build line items with formatted prices
   const lineItems: LineItem[] = tradeItems.map((item) => ({
     description: item.description,
-    quantity: item.quantity % 1 === 0 ? String(item.quantity) : item.quantity.toFixed(1),
+    quantity: formatQuantity(item.quantity),
     unit: item.unit,
     unitPrice: formatCurrency(item.unitPrice),
     total: formatCurrency(item.quantity * item.unitPrice),

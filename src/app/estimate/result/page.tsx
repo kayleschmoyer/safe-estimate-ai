@@ -9,12 +9,14 @@ import { Alert, AlertIcon } from "@/components/ui/alert";
 
 // ---------------------------------------------------------------------------
 // useSyncExternalStore wires up sessionStorage without triggering
-// the react-hooks/set-state-in-effect lint rule (React Hooks plugin v7+)
+// the react-hooks/set-state-in-effect lint rule (React Hooks plugin v7+).
+// The subscribe function listens for the 'storage' event so that cross-tab
+// updates (e.g. opening the estimate form in another tab) trigger a re-render.
 // ---------------------------------------------------------------------------
 
-function subscribe() {
-  // sessionStorage doesn't emit events; return a no-op unsubscribe
-  return () => {};
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
 }
 
 function getSnapshot(): string | null {
